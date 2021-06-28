@@ -1,0 +1,17 @@
+# in .cargo/config.toml
+
+# Since we added our own target, we will need some crates to be compiled for
+# this target specifically
+[unstable]
+build-std-features = ["compiler-builtins-mem"]
+build-std = ["core", "compiler_builtins"]
+
+# Set the target so we don't need to specify on every cargo command
+[build]
+target = "x86_64-mosix.json"
+
+# When our target OS is set to 'none' we want to run 'bootimage runner' for
+# 'cargo run'. This will compile our code and start our OS in qemu
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner"
+
